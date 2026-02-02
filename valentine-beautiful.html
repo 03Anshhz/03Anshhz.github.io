@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine? 💝</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background-color-1: #ffafbd;
+      --background-color-2: #ffc3a0;
+      --button-color: #ff6b6b;
+      --button-hover: #ff8787;
+      --text-color: #ff4757;
+      --float-duration: 15s;
+      --float-distance: 50px;
+      --bounce-speed: 0.5s;
+      --heart-explosion-size: 1.5;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, var(--background-color-1), var(--background-color-2));
+      font-family: 'Montserrat', Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    .floating-elements {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      left: 0; top: 0;
+    }
+    .heart, .bear {
+      position: absolute;
+      font-size: 2rem;
+      animation: float var(--float-duration) linear infinite;
+      user-select: none;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); }
+      100% { transform: translateY(-100px) translateX(var(--float-distance)); }
+    }
+    .container {
+      background: rgba(255, 80, 120, 0.78); /* reddish-pinkish, more transparent */
+      padding: 2.5rem 2rem 2rem 2rem;
+      border-radius: 24px;
+      box-shadow: 0 0 20px rgba(255, 80, 120, 0.18);
+      text-align: center;
+      max-width: 420px;
+      margin: 20px;
+      z-index: 2;
+      position: relative;
+      border: 2px solid #ff4f8b33;
+    }
+    .cat {
+      margin: 0 auto 1.5rem auto;
+      width: 90px;
+      height: 90px;
+      display: block;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem 0;
+      color: #222;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .letter {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+    .paper {
+      background: #fffbe7;
+      border: 2px solid #ffe6f0;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #ffb07c33;
+      padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+      max-width: 340px;
+      margin: 0 auto;
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      position: relative;
+    }
+    .paper-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #d7263d;
+      letter-spacing: 0.5px;
+    }
+    .paper-content {
+      font-size: 1.08rem;
+      color: #333;
+      line-height: 1.7;
+      text-align: left;
+    }
+    .paper-greeting {
+      color: #d7263d;
+      font-weight: bold;
+      font-size: 1.08rem;
+    }
+    .paper-main {
+      color: #222;
+      font-size: 1.05rem;
+    }
+    .paper-highlight {
+      color: #ff4f8b;
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+    .paper-sign {
+      color: #d7263d;
+      font-weight: bold;
+      font-size: 1.05rem;
+      display: block;
+      margin-top: 0.7rem;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .btn {
+      font-size: 1.1rem;
+      padding: 0.7rem 2.2rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-yes {
+      background: var(--button-color);
+      color: #fff;
+      box-shadow: 0 2px 8px #ff4f8b33;
+    }
+    .btn-yes:hover {
+      background: var(--button-hover);
+      transform: scale(1.07);
+    }
+    .btn-no {
+      background: #eee;
+      color: #888;
+      position: relative;
+    }
+    .note {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 0.5rem;
+    }
+    .gifts {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .gift-btn {
+      background: #ffe6f0;
+      border: 2px solid #ff4f8b;
+      color: #d7263d;
+      font-size: 1.1rem;
+      border-radius: 16px;
+      padding: 1.2rem 2.2rem;
+      font-family: inherit;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px #ff4f8b22;
+      margin-bottom: 0.5rem;
+    }
+    .gift-btn:hover {
+      background: #ff4f8b;
+      color: #fff;
+      transform: scale(1.07);
+    }
+    .music-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .music-btn {
+      background: var(--button-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .music-btn:hover {
+      transform: scale(1.05);
+      background: var(--button-hover);
+    }
+    @media (max-width: 500px) {
+      .container { max-width: 98vw; padding: 1rem 0.2rem; }
+      .paper { max-width: 95vw; }
+      .gifts { flex-direction: column; gap: 0.7rem; }
+      .floating-secret-btn-container { left: 50% !important; transform: translateX(-50%) !important; top: 8vh !important; }
+    }
+    /* Floating secret message button OUTSIDE */
+    .floating-secret-btn-container {
+      position: fixed;
+      left: 80vw;
+      top: 18vh;
+      z-index: 10;
+      pointer-events: auto;
+      animation: floatSecretOutside 7s ease-in-out infinite;
+      transition: left 0.3s, top 0.3s;
+    }
+    .floating-secret-outside {
+      font-size: 0.85rem !important;
+      padding: 0.35rem 1.1rem !important;
+      opacity: 0.7 !important;
+      border-radius: 22px !important;
+      background: #fffbe7 !important;
+      color: #d7263d !important;
+      border: 2px solid #ff4f8b !important;
+      box-shadow: 0 2px 12px #ffb07c33;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .floating-secret-outside:hover {
+      background: #ff4f8b !important;
+      color: #fff !important;
+      opacity: 1 !important;
+      transform: scale(1.08);
+    }
+    @keyframes floatSecretOutside {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-30px) scale(1.04); }
+      100% { transform: translateY(0px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-elements"></div>
+  <div class="container" id="mainContainer">
+    <svg class="cat" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="#ffb07c" />
+      <ellipse cx="35" cy="35" rx="7" ry="12" fill="#ffb07c" transform="rotate(-20 35 35)"/>
+      <ellipse cx="65" cy="35" rx="7" ry="12" fill="#ffb07c" transform="rotate(20 65 35)"/>
+      <circle cx="50" cy="55" r="2.5" fill="#e35d6a" />
+      <circle cx="40" cy="50" r="3.5" fill="#222" />
+      <circle cx="60" cy="50" r="3.5" fill="#222" />
+      <path d="M80 25 Q90 15 90 30 Q85 35 80 25" fill="#ff4f8b" />
+    </svg>
+    <h1><span id="name">Samridhi, my Baby,</span> do you like me?</h1>
+    <div class="letter" id="letterSection">
+      <div class="paper">
+        <div class="paper-title">Words from my <span style="color:#ff4f8b; text-decoration:underline;">Heart</span></div>
+        <div class="paper-content">
+          <span class="paper-greeting">To the love of my life,</span><br><br>
+          <span class="paper-main">You make my life so meaningful and I am so lucky to have you.</span><br><br>
+          <span class="paper-highlight">I love you wholeheartedly and I can't wait to continue loving you for the rest of my life.</span><br><br>
+          <span class="paper-main">I know I tell you this everyday but you are literally the most beautiful girl I know.</span><br><br>
+          <span class="paper-sign">Anyways, I love you!</span>
+        </div>
+      </div>
+    </div>
+    <div class="buttons" id="mainButtons">
+      <button class="btn btn-yes" id="yesBtn">Yes</button>
+      <button class="btn btn-no" id="noBtn">No</button>
+    </div>
+    <!-- Floating Secret Message Button (outside card) -->
+    <div class="floating-secret-btn-container">
+      <button class="btn gift-btn floating-secret-outside" id="secretAnswerBtn"></button>
+    </div>
+    <div class="note">“No” seems a bit shy 😈</div>
+    <!-- Love Meter Section (hidden by default) -->
+    <div id="loveMeterSection" style="display:none; margin-bottom:1.5rem;">
+      <div style="font-size:1.2rem; color:#d7263d; font-weight:bold; margin-bottom:1rem;">How much do you love me?</div>
+      <input type="range" id="loveMeter" min="0" max="5000" value="100" style="width:90%;">
+      <div id="loveMeterValue" style="margin:0.7rem 0 1.2rem 0; font-size:1.1rem; color:#d7263d; font-weight:bold;">100%</div>
+      <button class="btn gift-btn" id="loveMeterNextBtn">Next ❤️</button>
+      <div id="loveMeterMsg" style="margin-top:0.7rem; font-size:1.05rem;"></div>
+    </div>
+    <!-- Gifts Section (hidden by default) -->
+    <div id="giftSection" style="display:none;">
+      <h1 id="giftHeading" style="color:#d7263d; font-size:2rem; margin-bottom:0.5rem;">Yayyy, I Love You So Much</h1>
+      <div style="color:#888; margin-bottom:1.5rem;">I made all these for you hehe</div>
+      <div class="gifts">
+        <button class="gift-btn" id="gift1">Gift 1</button>
+        <button class="gift-btn" id="gift2">Gift 2</button>
+        <button class="gift-btn" id="gift3">Gift 3</button>
+        <button class="gift-btn" id="gift4">Gift 4</button>
+      </div>
+      <div id="giftContent" style="margin-top:2rem;"></div>
+    </div>
+  </div>
+  <div id="musicControls" class="music-controls">
+    <button id="musicToggle" class="music-btn">🎵 Play Music</button>
+    <audio id="bgMusic" loop>
+      <source id="musicSource" src="https://res.cloudinary.com/dncywqfpb/video/upload/v1738399057/music_qrhjvy.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+  <script>
+    // ============================================
+    // 💝 CUSTOMIZE YOUR VALENTINE'S WEBSITE HERE 💝
+    // ============================================
+
+    const CONFIG = {
+      valentineName: "Samridhi",
+      pageTitle: "Will You Be My Valentine? 💝",
+      floatingEmojis: {
+        hearts: ['❤️', '💖', '💝', '💗', '💓'],
+        bears: ['🧸', '🐻']
+      },
+      questions: {
+        first: {
+          text: "Do you like me?",
+          yesBtn: "Yes",
+          noBtn: "No",
+          secretAnswer: "I don't like you, I love you! ❤️"
+        },
+        second: {
+          text: "How much do you love me?",
+          startText: "This much!",
+          nextBtn: "Next ❤️"
+        },
+        third: {
+          text: "Will you be my Valentine on February 14th, 2025? 🌹",
+          yesBtn: "Yes!",
+          noBtn: "No"
+        }
+      },
+      loveMessages: {
+        extreme: "WOOOOW You love me that much?? 🥰🚀💝",
+        high: "To infinity and beyond! 🚀💝",
+        normal: "And beyond! 🥰"
+      },
+      celebration: {
+        title: "Yay! I'm the luckiest person in the world! 🎉💝💖💝💓",
+        message: "Now come get your gift, a big warm hug and a huge kiss!",
+        emojis: "🎁💖🤗💝💋❤️💕"
+      },
+      colors: {
+        backgroundStart: "#ffafbd",
+        backgroundEnd: "#ffc3a0",
+        buttonBackground: "#ff6b6b",
+        buttonHover: "#ff8787",
+        textColor: "#ff4757"
+      },
+      animations: {
+        floatDuration: "15s",
+        floatDistance: "50px",
+        bounceSpeed: "0.5s",
+        heartExplosionSize: 1.5
+      },
+      music: {
+        enabled: true,
+        autoplay: true,
+        musicUrl: "https://res.cloudinary.com/dncywqfpb/video/upload/v1738399057/music_qrhjvy.mp3",
+        startText: "🎵 Play Music",
+        stopText: "🔇 Stop Music",
+        volume: 0.5
+      }
+    };
+    window.VALENTINE_CONFIG = CONFIG;
+
+    // Floating hearts and bears
+    const hearts = ['❤️', '💖', '💝', '💗', '💓'];
+    const bears = ['🧸', '🐻'];
+    function createFloatingElements() {
+      const container = document.querySelector('.floating-elements');
+      for (let i = 0; i < 22; i++) {
+        const div = document.createElement('div');
+        div.className = 'heart';
+        div.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+        setRandomPosition(div);
+        container.appendChild(div);
+      }
+      for (let i = 0; i < 12; i++) {
+        const div = document.createElement('div');
+        div.className = 'bear';
+        div.innerHTML = bears[Math.floor(Math.random() * bears.length)];
+        setRandomPosition(div);
+        container.appendChild(div);
+      }
+    }
+    function setRandomPosition(element) {
+      element.style.left = Math.random() * 100 + 'vw';
+      element.style.animationDelay = Math.random() * 5 + 's';
+      element.style.animationDuration = 10 + Math.random() * 20 + 's';
+    }
+    createFloatingElements();
+
+    // Music player
+    const musicToggle = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+    let musicPlaying = false;
+    musicToggle.onclick = function() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicToggle.textContent = '🔇 Stop Music';
+      } else {
+        bgMusic.pause();
+        musicToggle.textContent = '🎵 Play Music';
+      }
+    };
+    // Try autoplay
+    window.addEventListener('DOMContentLoaded', () => {
+      if (bgMusic.autoplay || true) {
+        bgMusic.play().catch(() => {
+          musicToggle.textContent = '🎵 Play Music';
+        });
+      }
+    });
+
+    // Main logic
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const mainCard = document.getElementById('mainContainer');
+    const mainButtons = document.getElementById('mainButtons');
+    const giftSection = document.getElementById('giftSection');
+    let yesBtnScale = 1;
+    let noCount = 0;
+    const getNoButtonText = () => {
+      const phrases = [
+        "No",
+        "Are you sure?",
+        "What if I asked really nicely?",
+        "Pretty please",
+        "With a chocolate rice cake on top",
+        "What about a oreo waffle",
+        "TWC Special waffle?",
+        "PLEASE POOKIE",
+        "But :*(",
+        "I am going to die",
+        "Yep im dead",
+        "ok ur talking to anshuman's ghost",
+        "please babe",
+        ":(((",
+        "PRETTY PLEASE",
+        "Estoy muerto",
+        "No :("
+      ];
+      return phrases[Math.min(noCount, phrases.length - 1)];
+    };
+    // Modal for secret answer
+    const secretModal = document.createElement('div');
+    secretModal.id = 'secretModal';
+    secretModal.style.display = 'none';
+    secretModal.innerHTML = `
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div style="font-size:1.3rem; color:#d7263d; font-weight:bold; margin-bottom:1.2rem;">${CONFIG.questions.first.secretAnswer}</div>
+        <button class="btn gift-btn" id="modalContinueBtn" style="font-size:1.05rem;">Continue</button>
+      </div>
+    `;
+    document.body.appendChild(secretModal);
+
+    // Modal styles
+    const modalStyle = document.createElement('style');
+    modalStyle.innerHTML = `
+      #secretModal { position: fixed; z-index: 2000; left: 0; top: 0; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(255,80,120,0.18); }
+      #secretModal .modal-overlay { position: absolute; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.7); }
+      #secretModal .modal-content { position: relative; background: #fffbe7; border-radius: 20px; box-shadow: 0 2px 24px #ff4f8b33; padding: 2.2rem 2.5rem 2rem 2.5rem; z-index: 2; text-align: center; min-width: 260px; max-width: 90vw; }
+      @media (max-width: 500px) { #secretModal .modal-content { padding: 1.2rem 0.5rem; } }
+    `;
+    document.head.appendChild(modalStyle);
+    const loveMeterSection = document.getElementById('loveMeterSection');
+    const loveMeter = document.getElementById('loveMeter');
+    const loveMeterValue = document.getElementById('loveMeterValue');
+    const loveMeterMsg = document.getElementById('loveMeterMsg');
+    const loveMeterNextBtn = document.getElementById('loveMeterNextBtn');
+    const giftHeading = document.getElementById('giftHeading');
+
+    function showLoveMeter() {
+      document.querySelector('.note').style.display = 'none';
+      mainButtons.style.display = 'none';
+      // Hide the floating secret button visually only if you want, but keep it clickable
+      loveMeterSection.style.display = 'block';
+      // Reset meter
+      loveMeter.value = 100;
+      loveMeterValue.textContent = '100%';
+      loveMeterMsg.textContent = '';
+    }
+
+    function showSecretModal() {
+      secretModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      // Attach event for continue
+      setTimeout(() => {
+        document.getElementById('modalContinueBtn').onclick = function() {
+          secretModal.style.display = 'none';
+          document.body.style.overflow = '';
+          showLoveMeter();
+        };
+      }, 0);
+    }
+
+    yesBtn.onclick = function(e) {
+      // Always move Yes button away like No button
+      yesBtnScale += 0.15;
+      yesBtn.style.transform = `scale(${yesBtnScale})`;
+      // Move Yes button to a random position within the card
+      const cardRect = mainCard.getBoundingClientRect();
+      const btnRect = yesBtn.getBoundingClientRect();
+      const maxX = cardRect.width - btnRect.width - 20;
+      const maxY = cardRect.height - btnRect.height - 20;
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY + 100;
+      yesBtn.style.position = 'absolute';
+      yesBtn.style.left = randX + 'px';
+      yesBtn.style.top = randY + 'px';
+      // Do NOT progress to love meter or gifts
+    };
+
+    // Set secret answer button text from config
+    const secretAnswerBtn = document.getElementById('secretAnswerBtn');
+    secretAnswerBtn.textContent = CONFIG.questions.first.secretAnswer;
+    secretAnswerBtn.onclick = function() {
+      showSecretModal();
+    };
+
+    // Love meter slider update
+    loveMeter.oninput = function() {
+      loveMeterValue.textContent = loveMeter.value + '%';
+      if (loveMeter.value > 5000) {
+        loveMeterMsg.textContent = CONFIG.loveMessages.extreme;
+        loveMeterMsg.style.color = '#fff';
+        loveMeterMsg.style.textShadow = '0 2px 8px #d7263d, 0 0 2px #ff4f8b';
+      } else if (loveMeter.value > 1000) {
+        loveMeterMsg.textContent = CONFIG.loveMessages.high;
+        loveMeterMsg.style.color = '#f8f8ff';
+        loveMeterMsg.style.textShadow = '0 2px 8px #d7263d, 0 0 2px #ff4f8b';
+      } else if (loveMeter.value > 100) {
+        loveMeterMsg.textContent = CONFIG.loveMessages.normal;
+        loveMeterMsg.style.color = '#ff4f8b';
+        loveMeterMsg.style.textShadow = '';
+      } else {
+        loveMeterMsg.textContent = '';
+        loveMeterMsg.style.color = '';
+        loveMeterMsg.style.textShadow = '';
+      }
+    };
+
+    // Proceed to gifts after love meter
+    loveMeterNextBtn.onclick = function() {
+      loveMeterSection.style.display = 'none';
+      // Hide/disable main card content
+      document.getElementById('letterSection').style.opacity = '0.3';
+      mainButtons.style.display = 'none';
+      // Show gifts
+      giftSection.style.display = 'block';
+      // Update heading
+      giftHeading.textContent = 'Yayyy, I Love You So Much';
+    };
+    noBtn.onclick = function(e) {
+      noCount++;
+      yesBtnScale += 0.15;
+      yesBtn.style.transform = `scale(${yesBtnScale})`;
+      // Move No button
+      const cardRect = mainCard.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+      const maxX = cardRect.width - btnRect.width - 20;
+      const maxY = cardRect.height - btnRect.height - 20;
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY + 100;
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = randX + 'px';
+      noBtn.style.top = randY + 'px';
+      noBtn.innerText = getNoButtonText();
+    };
+    // Gifts
+    const giftContent = document.getElementById('giftContent');
+    document.getElementById('gift1').onclick = function() {
+      giftContent.innerHTML = `<div style=\"font-size:1.2rem; color:#d7263d; margin-bottom:1rem;\">A Bear with Roses for you!</div><img src='https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif' alt='Bear with Roses' style='max-width:180px; border-radius:12px; box-shadow:0 2px 8px #ff4f8b22;'>`;
+    };
+    // Gift 2 modal (Love Note)
+    let loveNoteModal = document.getElementById('loveNoteModal');
+    if (!loveNoteModal) {
+      loveNoteModal = document.createElement('div');
+      loveNoteModal.id = 'loveNoteModal';
+      loveNoteModal.style.display = 'none';
+      loveNoteModal.innerHTML = `
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+          <button id="closeLoveNoteCross" aria-label="Close" style="position:absolute;top:14px;right:18px;font-size:1.7rem;background:none;border:none;color:#d7263d;cursor:pointer;z-index:10;line-height:1;opacity:0.7;transition:opacity 0.2s;">&times;</button>
+          <div style="font-size:1.5rem; color:#d7263d; margin-bottom:1.2rem; font-family:'Dancing Script',cursive; letter-spacing:1px;">A Love Note</div>
+          <div style='background:linear-gradient(120deg,#fffbe7 80%,#ffe6f0 100%); border-radius:18px; padding:1.7rem 1.3rem 1.3rem 1.3rem; border:2.5px solid #ffe6f0; font-family:"Dancing Script", "Comic Sans MS",cursive; color:#d7263d; font-size:1.25rem; line-height:1.9; box-shadow:0 4px 24px #ffb07c33; max-width:420px; margin:0 auto;'>
+            My Cutest Pookie,<br><br>
+            You are the best thing that ever happened to me. Your smile makes my heart bloom with joy.<br><br>
+            Every moment with you feels like a beautiful dream I never want to wake up from. Your laughter is my favorite melody, and your happiness is my greatest wish.<br><br>
+            Thank you for loving me. I am endlessly grateful for your kindness, your warmth, and the way you make every day brighter.<br><br>
+            I love you more than words can ever say, and I promise to keep cherishing you, supporting you, and making you smile for the rest of our lives.<br><br>
+            <span style="font-size:1.1rem; color:#ff4f8b; font-family:'Dancing Script',cursive;">I Love You So Much! 💖</span>
+          </div>
+          <button class="btn gift-btn" id="closeLoveNoteBtn" style="margin-top:2.2rem; font-size:1.13rem; background:linear-gradient(90deg,#ffb6c1 60%,#ffe6f0 100%); color:#d7263d; border:2px solid #ff4f8b; box-shadow:0 2px 12px #ffb07c33; padding:0.8rem 2.5rem; border-radius:18px; font-family:'Montserrat',Arial,sans-serif; font-weight:bold; transition:background 0.2s, color 0.2s;">Close</button>
+        </div>
+      `;
+      document.body.appendChild(loveNoteModal);
+    }
+    // Modal style (reuse from secret modal)
+    if (!document.getElementById('loveNoteModalStyle')) {
+      const style = document.createElement('style');
+      style.id = 'loveNoteModalStyle';
+      style.innerHTML = `
+        #loveNoteModal { position: fixed; z-index: 2100; left: 0; top: 0; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(255,80,120,0.18); }
+        #loveNoteModal .modal-overlay { position: absolute; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.7); }
+        #loveNoteModal .modal-content {
+          position: relative;
+          background: #fffbe7;
+          border-radius: 28px;
+          box-shadow: 0 4px 32px #ff4f8b33, 0 0px 0px #fff;
+          padding: 2.7rem 2.7rem 2.2rem 2.7rem;
+          z-index: 2;
+          text-align: center;
+          min-width: 260px;
+          max-width: 98vw;
+          border: 2.5px solid #ffe6f0;
+          max-height: 90vh;
+          overflow-y: auto;
+        }
+        #loveNoteModal .modal-content::-webkit-scrollbar { width: 8px; background: #ffe6f0; border-radius: 8px; }
+        #loveNoteModal .modal-content::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 8px; }
+        #loveNoteModal .modal-content { scrollbar-width: thin; scrollbar-color: #ffb6c1 #ffe6f0; }
+        @media (max-width: 600px) { #loveNoteModal .modal-content { padding: 1.2rem 0.3rem; } }
+        #closeLoveNoteBtn { cursor:pointer; }
+        #closeLoveNoteBtn:hover { background:#ff4f8b !important; color:#fff !important; }
+      `;
+      document.head.appendChild(style);
+    }
+    document.getElementById('gift2').onclick = function() {
+      loveNoteModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.getElementById('closeLoveNoteBtn').onclick = function() {
+          loveNoteModal.style.display = 'none';
+          document.body.style.overflow = '';
+        };
+        // Cross button close
+        const crossBtn = document.getElementById('closeLoveNoteCross');
+        if (crossBtn) {
+          crossBtn.onclick = function() {
+            loveNoteModal.style.display = 'none';
+            document.body.style.overflow = '';
+          };
+        }
+      }, 0);
+    };
+    document.getElementById('gift3').onclick = function() {
+      giftContent.innerHTML = `<div style=\"font-size:1.2rem; color:#d7263d; margin-bottom:1rem;\">A Cute Bunny Hug!</div><img src='https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif' alt='Bunny Hug' style='max-width:180px; border-radius:12px; box-shadow:0 2px 8px #ff4f8b22;'>`;
+    };
+    document.getElementById('gift4').onclick = function() {
+      giftContent.innerHTML = `<div style=\"font-size:1.2rem; color:#d7263d; margin-bottom:1rem;\">A Bear Kiss for you!</div><img src='https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif' alt='Bear Kiss' style='max-width:180px; border-radius:12px; box-shadow:0 2px 8px #ff4f8b22;'>`;
+    };
+  </script>
+</body>
+</html>
